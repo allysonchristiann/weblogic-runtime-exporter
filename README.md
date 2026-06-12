@@ -1,37 +1,38 @@
 # WebLogic Runtime Exporter
 
-WebLogic runtime metrics collection for Zabbix using WLST (Jython), Oracle MBeans and JSON output.
+Coletor de métricas runtime para Oracle WebLogic utilizando WLST (Jython) e integração com Zabbix.
 
-## Overview
+## Objetivo
 
-This project collects runtime information directly from Oracle WebLogic MBeans and exports the results in JSON format for Zabbix monitoring.
+Disponibilizar métricas internas do WebLogic que não estão presentes nos templates padrão do Zabbix, permitindo monitoramento de:
 
-The exporter was designed to provide visibility into:
+- JVM
+- Datasources
+- Aplicações
+- Thread Pools
+- Work Managers
+- Health State do servidor
 
-- Server health
-- JVM metrics
-- Datasource metrics
-- Application status
-- ThreadPool metrics
-- WorkManager metrics
+## Fluxo de Coleta
 
-## Architecture
-
-WebLogic Server
-      |
-      v
-WLST Script
-      |
-      v
-JSON Output
-      |
-      v
+WebLogic Runtime
+    ↓
+WLST (Jython)
+    ↓
+Oracle MBeans
+    ↓
+JSON
+    ↓
 Zabbix Agent
-      |
-      v
+    ↓
 Zabbix Server
 
-## Collected Metrics
+## Métricas Coletadas
+
+### Servidor
+
+- State
+- OverallHealthState
 
 ### JVM
 
@@ -43,42 +44,35 @@ Zabbix Server
 ### Datasource
 
 - State
-- Available Connections
-- Active Connections
-- Total Connections
-- Waiting Connections
+- NumAvailable
+- ActiveConnectionsCurrentCount
+- ConnectionsTotalCount
+- WaitingForConnectionCurrentCount
 
-### ThreadPool
+### Thread Pool
 
-- Pending Requests
-- Hogging Threads
-- Stuck Threads
+- PendingUserRequestCount
+- HoggingThreadCount
+- StuckThreadCount
 
-### WorkManager
+### Work Managers
 
-- Pending Requests
-- Stuck Threads
+- PendingRequests
+- StuckThreadCount
 
-### Applications
+### Aplicações
 
-- Deployment Status
+- Component Status
 
-## Example Output
+## Exemplo de Saída
 
 ```json
 {
-  "server_state": "RUNNING",
-  "server_health": "HEALTH_OK",
-  "application_status": "STATE_ACTIVE",
-  "jvm_heap_free_percent": 47,
-  "threadpool_stuck": 0
+  "server_state":"RUNNING",
+  "server_health":"HEALTH_OK",
+  "application_status":"STATE_ACTIVE",
+  "jvm_heap_free_percent":47,
+  "datasource_active":5,
+  "threadpool_stuck":0,
+  "workmanager_pending":0
 }
-```
-
-## Technologies
-
-- Oracle WebLogic
-- WLST
-- Jython
-- Zabbix
-- JSON
