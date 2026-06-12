@@ -15,17 +15,24 @@ Disponibilizar métricas internas do WebLogic que não estão presentes nos temp
 
 ## Fluxo de Coleta
 
+```text
 WebLogic Runtime
-    ↓
-WLST (Jython)
-    ↓
-Oracle MBeans
-    ↓
-JSON
-    ↓
-Zabbix Agent
-    ↓
-Zabbix Server
+        │
+        ▼
+   WLST (Jython)
+        │
+        ▼
+   Oracle MBeans
+        │
+        ▼
+      JSON
+        │
+        ▼
+   Zabbix Agent
+        │
+        ▼
+   Zabbix Server
+```
 
 ## Métricas Coletadas
 
@@ -68,11 +75,24 @@ Zabbix Server
 
 ```json
 {
-  "server_state":"RUNNING",
-  "server_health":"HEALTH_OK",
-  "application_status":"STATE_ACTIVE",
-  "jvm_heap_free_percent":47,
-  "datasource_active":5,
-  "threadpool_stuck":0,
-  "workmanager_pending":0
+  "server_state": "RUNNING",
+  "server_health": "HEALTH_OK",
+  "application_status": "STATE_ACTIVE",
+  "jvm_heap_free_percent": 47,
+  "datasource_active": 5,
+  "threadpool_stuck": 0,
+  "workmanager_pending": 0
 }
+```
+
+## Tecnologias
+
+- Oracle WebLogic
+- WLST
+- Jython
+- Zabbix
+- JSON
+
+## Caso de Uso
+
+Projeto desenvolvido para monitoramento de ambientes Oracle WebLogic em produção, permitindo a criação de itens dependentes no Zabbix a partir de uma única coleta JSON.
